@@ -1,19 +1,27 @@
 package repository
 
-import "gorm.io/gorm"
+import (
+	"github.com/kirillov6/pokedex-api-go/pkg/pokedex"
+	"gorm.io/gorm"
+)
 
-type Authorization interface {
-}
+type (
+	Authorization interface {
+		CreateUser(user pokedex.User) (uint, error)
+		GetUser(creds pokedex.Creditionals) (pokedex.User, error)
+	}
 
-type Pokedex interface {
-}
+	Pokedex interface {
+	}
 
-type Repository struct {
-	Authorization
-	Pokedex
-	DB *gorm.DB
-}
+	Repository struct {
+		Authorization
+		Pokedex
+	}
+)
 
-func NewRepository(DB *gorm.DB) *Repository {
-	return &Repository{DB: DB}
+func NewRepository(db *gorm.DB) *Repository {
+	return &Repository{
+		Authorization: NewAuthRepository(db),
+	}
 }

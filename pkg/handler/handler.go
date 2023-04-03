@@ -22,7 +22,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		auth.POST("/sign-in", h.signIn)
 	}
 
-	pokedex := r.Group("/pokedex")
+	pokedex := r.Group("/pokedex", h.tokenAuthMiddleware)
 	{
 		pokedex.GET("/", h.getPokedex)
 		pokedex.POST("/", h.addPokemon)

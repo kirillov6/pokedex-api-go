@@ -2,12 +2,12 @@ package pokedex
 
 type (
 	Pokedex struct {
-		Id          uint   `json:"id" gorm:"primarykey"`
+		Id          uint   `json:"-" gorm:"primarykey"`
 		Description string `json:"description"`
 	}
 
 	Pokemon struct {
-		Id      uint   `json:"id" gorm:"primarykey"`
+		Id      uint   `json:"-" gorm:"primarykey"`
 		Name    string `json:"name"`
 		Type    string `json:"type"`
 		HP      uint   `json:"hp"`

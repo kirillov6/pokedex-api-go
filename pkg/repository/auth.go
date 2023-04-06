@@ -13,17 +13,16 @@ func NewAuthRepository(db *gorm.DB) *AuthRepository {
 	return &AuthRepository{db}
 }
 
-func (s *AuthRepository) CreateUser(user pokedex.User) (uint, error) {
-	res := s.db.Create(&user)
-	if res.Error != nil {
-		return 0, res.Error
+func (r *AuthRepository) CreateUser(user pokedex.User) (uint, error) {
+	if err := r.db.Create(&user).Error; err != nil {
+		return 0, err
 	}
 
 	return user.Id, nil
 }
 
-func (s *AuthRepository) GetUser(creds pokedex.Creditionals) (pokedex.User, error) {
+func (r *AuthRepository) GetUser(creds pokedex.Creditionals) (pokedex.User, error) {
 	var user pokedex.User
-	res := s.db.Where(&pokedex.User{Creditionals: creds}).First(&user)
+	res := r.db.Where(&pokedex.User{Creditionals: creds}).First(&user)
 	return user, res.Error
 }

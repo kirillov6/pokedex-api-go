@@ -24,7 +24,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	pokedex := r.Group("/pokedex", h.tokenAuthMiddleware)
 	{
-		pokedex.GET("/", h.getPokedex)
+		pokedex.GET("/", h.getPokemons)
 		pokedex.POST("/", h.addPokemon)
 
 		pokemon := pokedex.Group("/:id")

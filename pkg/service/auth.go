@@ -32,12 +32,12 @@ func NewAuthService(repo repository.Authorization) *AuthService {
 }
 
 func (s *AuthService) CreateUser(user pokedex.User) (uint, error) {
-	user.Passowrd = s.generatePasswordHash(user.Passowrd)
+	user.Password = s.generatePasswordHash(user.Password)
 	return s.repo.CreateUser(user)
 }
 
 func (s *AuthService) GenerateToken(creds pokedex.Creditionals) (string, error) {
-	creds.Passowrd = s.generatePasswordHash(creds.Passowrd)
+	creds.Password = s.generatePasswordHash(creds.Password)
 	user, err := s.repo.GetUser(creds)
 	if err != nil {
 		return "", err

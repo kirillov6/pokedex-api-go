@@ -3,7 +3,7 @@ package pokedex
 type (
 	Creditionals struct {
 		Username string `json:"username" binding:"required"`
-		Passowrd string `json:"password" binding:"required"`
+		Password string `json:"password" binding:"required"`
 	}
 
 	User struct {
@@ -12,9 +12,9 @@ type (
 		Creditionals
 	}
 
-	UserPokedex struct {
+	UserPokemon struct {
 		Id        uint `gorm:"primarykey"`
 		UserId    uint
-		PokedexId uint
+		PokemonId uint
 	}
 )

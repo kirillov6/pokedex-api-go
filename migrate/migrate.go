@@ -20,8 +20,6 @@ func main() {
 	}
 
 	DB.AutoMigrate(&pokedex.User{})
-	DB.AutoMigrate(&pokedex.Pokedex{})
-	DB.AutoMigrate(&pokedex.UserPokedex{})
 	DB.AutoMigrate(&pokedex.Pokemon{})
-	DB.AutoMigrate(&pokedex.PokedexPokemon{})
+	DB.AutoMigrate(&pokedex.UserPokemon{})
 }

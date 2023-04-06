@@ -13,6 +13,11 @@ type (
 	}
 
 	Pokedex interface {
+		Create(userId uint, pokemon pokedex.Pokemon) (uint, error)
+		GetPokemons(userId uint) ([]pokedex.Pokemon, error)
+		GetPokemon(userId, pokemonId uint) (pokedex.Pokemon, error)
+		DeletePokemon(userId, pokemonId uint) error
+		UpdatePokemon(userId, pokemonId uint, newData pokedex.Pokemon) error
 	}
 
 	Service struct {
@@ -24,5 +29,6 @@ type (
 func NewService(repo *repository.Repository) *Service {
 	return &Service{
 		Authorization: NewAuthService(repo.Authorization),
+		Pokedex:       NewPokedexService(repo.Pokedex),
 	}
 }

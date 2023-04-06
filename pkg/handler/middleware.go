@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"errors"
 	"net/http"
 	"strings"
 
@@ -25,7 +26,7 @@ func (h *Handler) tokenAuthMiddleware(c *gin.Context) {
 		return
 	}
 
-	userId, err := h.service.ParseToken(authHeaderParts[1])
+	userId, err := h.service.Authorization.ParseToken(authHeaderParts[1])
 	if err != nil {
 		newResponseError(c, http.StatusUnauthorized, err.Error())
 		return
@@ -33,4 +34,22 @@ func (h *Handler) tokenAuthMiddleware(c *gin.Context) {
 
 	c.Set(userIdCtxKey, userId)
 	c.Next()
+}
+
+func getUserId(c *gin.Context) (uint, error) {
+	userId, ok := c.Get(userIdCtxKey)
+	if !ok {
+		errText := "User not found"
+		newResponseError(c, http.StatusInternalServerError, errText)
+		return 0, errors.New(errText)
+	}
+
+	uintId, ok := userId.(uint)
+	if !ok {
+		errText := "User has invalid id type"
+		newResponseError(c, http.StatusInternalServerError, errText)
+		return 0, errors.New(errText)
+	}
+
+	return uintId, nil
 }

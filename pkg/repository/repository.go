@@ -12,6 +12,11 @@ type (
 	}
 
 	Pokedex interface {
+		Create(userId uint, pokemon pokedex.Pokemon) (uint, error)
+		GetPokemons(userId uint) ([]pokedex.Pokemon, error)
+		GetPokemon(userId, pokemonId uint) (pokedex.Pokemon, error)
+		DeletePokemon(userId, pokemonId uint) error
+		UpdatePokemon(userId, pokemonId uint, newData pokedex.Pokemon) error
 	}
 
 	Repository struct {
@@ -23,5 +28,6 @@ type (
 func NewRepository(db *gorm.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthRepository(db),
+		Pokedex:       NewPokedexRepository(db),
 	}
 }
